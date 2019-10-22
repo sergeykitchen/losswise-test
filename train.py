@@ -18,7 +18,7 @@ for x in range(max_iter):
     if x % 5 == 0:
         seq = session.image_sequence(x=x, name="Test")
         for img_id in range(5):
-            pil_image = Image.open("image.png")
+            pil_image = Image.open("./image.png")
             seq.append(pil_image,
                       metrics={'accuracy': 1},
                       outputs={'name': 'Lena'},
