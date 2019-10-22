@@ -6,7 +6,7 @@ from PIL import Image
 
 
 losswise.set_api_key("IE11WZOSM")
-max_iter = 60
+max_iter = 2000
 session = losswise.Session(max_iter=max_iter,
     params={'max_iter': max_iter, 'dropout': 0.3, 'lr': 0.01, 'rnn_sizes': [256, 512]})
 graph = session.graph('loss', kind='min')
@@ -17,9 +17,14 @@ for x in range(max_iter):
     time.sleep(0.5)
     if x % 5 == 0:
         seq = session.image_sequence(x=x, name="Test")
-        for img_id in range(5):
+        for img_id in range(40):
             pil_image = Image.open("./image.png")
             seq.append(pil_image,
                     metrics={'accuracy': 1},
                     image_id=str(img_id) + "_img")
 session.done()
+
+#
+# git commit --allow-empty -m "Trigger build [lw]"
+# git push
+#
