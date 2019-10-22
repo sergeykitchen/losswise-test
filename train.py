@@ -1,14 +1,26 @@
-import losswise
 import time
 import random
+import losswise
+import numpy as np
+from PIL import Image
+
+
 losswise.set_api_key("IE11WZOSM")
-session = losswise.Session(tag='my_dilated_convnet', max_iter=10,
-                           params={'cnn_size': 20})
+max_iter = 20
+session = losswise.Session(max_iter=max_iter,
+    params={'max_iter': max_iter, 'dropout': 0.3, 'lr': 0.01, 'rnn_sizes': [256, 512]})
 graph = session.graph('loss', kind='min')
-session.set_values({ 'key5': 'eee'})
-for x in range(10):
+for x in range(max_iter):
     train_loss = 1. / (0.1 + x + 0.1 * random.random())
     test_loss = 1.5 / (0.1 + x + 0.2 * random.random())
     graph.append(x, {'train_loss': train_loss, 'test_loss': test_loss})
-    time.sleep(1.)
+    time.sleep(0.5)
+    if x % 5 == 0:
+        seq = session.image_sequence(x=x, name="Test")
+        for img_id in range(5):
+            pil_image = Image.open("image.png")
+            seq.append(pil_image,
+                      metrics={'accuracy': 1},
+                      outputs={'name': 'Lena'},
+                      image_id=str(img_id) + "_img")
 session.done()
