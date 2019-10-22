@@ -6,7 +6,7 @@ from PIL import Image
 
 
 losswise.set_api_key("IE11WZOSM")
-max_iter = 20
+max_iter = 60
 session = losswise.Session(max_iter=max_iter,
     params={'max_iter': max_iter, 'dropout': 0.3, 'lr': 0.01, 'rnn_sizes': [256, 512]})
 graph = session.graph('loss', kind='min')
@@ -20,7 +20,6 @@ for x in range(max_iter):
         for img_id in range(5):
             pil_image = Image.open("./image.png")
             seq.append(pil_image,
-                      metrics={'accuracy': 1},
-                      outputs={'name': 'Lena'},
-                      image_id=str(img_id) + "_img")
+                    metrics={'accuracy': 1},
+                    image_id=str(img_id) + "_img")
 session.done()
