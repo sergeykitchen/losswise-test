@@ -4,6 +4,7 @@ import losswise
 import numpy as np
 from PIL import Image
 
+
 losswise.set_api_key("IE11WZOSM")
 max_iter = 20
 session = losswise.Session(max_iter=max_iter,
