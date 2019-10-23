@@ -6,7 +6,7 @@ from PIL import Image
 
 
 losswise.set_api_key("IE11WZOSM")
-max_iter = 100
+max_iter = 200
 session = losswise.Session(max_iter=max_iter,
     params={'max_iter': max_iter, 'dropout': 0.3, 'lr': 0.01, 'rnn_sizes': [256, 512]})
 graph = session.graph('loss', kind='min')
